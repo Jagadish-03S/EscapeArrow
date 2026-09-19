@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 import os
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from .db import Base,engine
@@ -24,6 +25,8 @@ async def headers(request,call_next):
     return response
 @app.get('/health')
 def health():return {'status':'ok'}
+@app.get('/favicon.ico',include_in_schema=False)
+def favicon():return FileResponse(ROOT/'client'/'icon.svg',media_type='image/svg+xml')
 for r in (auth,play,profile,admin):app.include_router(r.router)
 app.mount('/admin',StaticFiles(directory=ROOT/'admin',html=True),name='admin')
 app.mount('/',StaticFiles(directory=ROOT/'client',html=True),name='player')
