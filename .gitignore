@@ -1,0 +1,13 @@
+.env
+*.db
+*.db-*
+__pycache__/
+.pytest_cache/
+.venv/
+node_modules/
+dist/
+android/.gradle/
+android/**/build/
+android/local.properties
+*.jks
+*.keystore

@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: escapearrow
+      POSTGRES_USER: escape
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD}
+    volumes:
+      - escape-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U escape -d escapearrow"]
+      interval: 5s
+      retries: 10
+  api:
+    build: .
+    env_file: backend/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg://escape:${POSTGRES_PASSWORD}@db:5432/escapearrow
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  escape-data:
