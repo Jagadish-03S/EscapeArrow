@@ -22,6 +22,10 @@ For macOS/Linux use `python3 -m venv .venv`, `.venv/bin/python -m pip install -r
 
 Edit `backend/app/config.py` and set `OWNER_EMAIL`, `OWNER_PHONE`, and `OWNER_PASSWORD` to the one owner credential. Then visit http://localhost:8000/admin/ and use that credential. Player accounts cannot use the admin login, and the old `make-admin` database flag is not accepted by admin APIs.
 
+## Deploy everything on Render
+
+The repository includes `render.yaml`. In Render choose **New > Blueprint**, connect this repository, and select the folder containing `render.yaml`. Render creates the Docker web service and PostgreSQL database together. Set the prompted owner and SMTP secrets, then deploy. The player site is `/`, and the owner dashboard is `/admin/` on the same Render URL.
+
 ## Android
 
 The `android/` native project is included. An APK is NOT included; it requires the Android SDK and your backend URL. From the project root:

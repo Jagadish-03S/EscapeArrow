@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: escapearrow
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: escapearrow-db
+          property: connectionString
+      - key: PUBLIC_URL
+        value: https://escapearrow.onrender.com
+      - key: ALLOWED_ORIGINS
+        value: https://escapearrow.onrender.com
+      - key: OTP_MODE
+        value: live
+      - key: OWNER_EMAIL
+        sync: false
+      - key: OWNER_PHONE
+        sync: false
+      - key: OWNER_PASSWORD
+        sync: false
+      - key: OWNER_USER_ID
+        sync: false
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        value: '587'
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASSWORD
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+databases:
+  - name: escapearrow-db
+    plan: free
